@@ -26,14 +26,14 @@ pip install -r requirements.txt
 
 ## Структура
 1. notebook.ipynb - jupyter notebook с кодом решения
-2. word_frequency_flibusta_cleared_with_eng_words.txt.gz - gzip-архив со словарём русских слов, отсортированных по частоте использования (источник - https://github.com/Somewater/ruword_frequency/blob/master/data/word_frequency_flibusta_0.txt)
+2. word_frequency_flibusta_cleared_with_eng_words.txt.gz - gzip-архив со словарём русских слов, отсортированных по частоте использования (источник - https://github.com/Somewater/ruword_frequency/blob/master/data/word_frequency_flibusta_0.txt) и дополненный словарём английских слов (источник - https://github.com/zydou/high-frequency-words/blob/master/200k.txt)
 3. test_data.txt - набор данных, полученный из stepik
 4. result.txt - результат, отправленный в stepik
 
-## Метод решения - динамическое программирование + словарь
-1. Использован pip-модуль wordninja_enhanced (https://github.com/timminator/wordninja-enhanced), являющийся модификацией модуля wordninja (https://github.com/keredson/wordninja), который поддерживает только английский язык.
+## Метод решения - Алгоритм Витерби + словарь
+1. Использован pip-модуль wordninja_enhanced (https://github.com/timminator/wordninja-enhanced), являющийся модификацией модуля wordninja (https://github.com/keredson/wordninja), который поддерживал только английский язык. Модуль реализует алгоритм Витерби (https://stackoverflow.com/questions/8870261/how-to-split-text-without-spaces-into-list-of-words/11642687#11642687).
 2. Загружен и очищен словарь русских слов - слова, встречающиеся менее 100 раз были удалены из-за наличия в них склеенных слов (например, "курткакожаная"), которые мешают добавлению пробелов в предложения.
-3. В конец словаря русских слов был добавлен словарь наиболее часто употребляемых английских слов (источник - https://github.com/zydou/high-frequency-words/blob/master/200k.txt) с целью определения английских слов (например, "Samsung", "iPhone")
+3. В конец словаря русских слов был добавлен словарь наиболее часто употребляемых английских слов с целью определения оных (например, "Samsung", "iPhone").
 
 ## Достоинства и недостатки
 ### Достоинства
@@ -47,7 +47,7 @@ def func():
 print(timeit.timeit(func, number=10000))
 # 2.8683789999922737
 ```
-2. Экономия памяти. В решении нет тяжеловесных моделей-трансформеров, а датасет в сжатом виде занимает ~9 МБ памяти.
+2. Экономия памяти. В решении нет тяжеловесных моделей, а словарь в сжатом виде занимает ~9 МБ памяти.
 3. Обработка пунктуации. Предложенное решение оставляет знаки препинания на тех местах, где они были в исходном предложении.
 
 ### Недостатки
